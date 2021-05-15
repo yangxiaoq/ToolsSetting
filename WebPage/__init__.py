@@ -1,11 +1,10 @@
 __version__ = '0.1'
-from flask import Flask
-from flask import render_template
+from flask import Flask,url_for
 
 app = Flask('WebPage')
 app.config['SECRET_KEY'] = 'random'
 app.debug = True
 
-@app.route('/')
+@app.route("/")
 def start():
-    return render_template('index.html')
+    return url_for("beta")
