@@ -24,4 +24,7 @@ def betastart():
     req.data = dataj
     resp = req.post()
     print(resp)
-    return render_template('index.html')
+    return "登录成功" if (resp == "") else render_template("index.html")
+
+def getBrandList():
+    dataj = {"name": name, "pwd": passwd, "mcode": c}

@@ -1,10 +1,11 @@
 __version__ = '0.1'
-from flask import Flask,url_for
+from flask import Flask,render_template
 
-app = Flask('WebPage')
+app = Flask(__name__)
 app.config['SECRET_KEY'] = 'random'
 app.debug = True
+from WebPage.request import StruData
 
-@app.route("/")
+@app.route('/')
 def start():
-    return url_for("beta")
+   return StruData.betastart()
