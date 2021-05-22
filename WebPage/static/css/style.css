@@ -3,7 +3,7 @@ body {
     background: #eee;
 }
 
-a,h1,h2 {
+a,h1,h2 ,.submitbtn{
     color: #377BA8;
 }
 
@@ -145,11 +145,19 @@ li {
     cursor: pointer;
 }
 
-label a{
+label a,.submitbtn{
     font-size: 1.2em;
 }
 
-.free_delivery, .delivery_markup ,.isinvoice{
+.free_delivery, .delivery_markup ,.isinvoice ,.submitbtn{
     margin-top: 10px;
 }
 
+
+.submitbtn{
+    float: left;
+    border: 1px solid #377BA8;
+    margin-top: 20px;
+    width: 60px;
+    height: 30px;
+}

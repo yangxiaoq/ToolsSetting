@@ -2,10 +2,10 @@ from util.HttpRequest import Request
 from config import config
 import WebPage as wp
 from util import Url
+from urllib.parse import urlencode
 
 req = Request()
 sbid,said = "",""
-shoplist = []
 
 def start():
     reinfo = refresh()
@@ -53,17 +53,48 @@ def getShopListAll(bid,aid):
     said = aid
     req.url = wp.baseurl + Url.getShopListAll + "&mcode=" + wp.c + "&bid=" + sbid + "&aid=" +said
     shopdata = req.get()
-    global shoplist
-    shoplist = shopdata['data']
-    print("shoplist",shoplist)
-    return shoplist
+    return shopdata['data']
 
-def SetEcoShop(sid):
-    req.url = wp.baseurl + Url.editship + "&mcode="
+def SetEcoShop(*key):
+    req.url = wp.baseurl + Url.editship + "?mcode=" + wp.c
+    sid = key[0]
+    if len(sid) == 0:
+        return "请选择门店"
+    invoice = key[1]
+    free_delivery = key[2]
+    delivery_markup = key[3]
     sids = sid.split('|')
     for i in range(len(sids)):
-        req.data = "aid={0}&bid={1}&sid={2}&sname={3}&isinvoice={4}&online_time[]={5}&enline_time[]={6}&free_delivery={7}&delivery_markup={8}".format(said,sbid,sids[i],'ces',0)
-        print(req.data)
+        dsid = eval(sids[i])
+        dsid['delivery_markup'] = delivery_markup
+        dsid['free_delivery'] = free_delivery
+        dsid['isinvoice'] = invoice
+        online = str(dsid['online_time']).split(' ')
+        coordinates = str(dsid['coordinates'])
+        redata = urlencode(dsid)
+        for i in range(len(online)):
+            redata = redata + '&online_time[]=' + online[i].split('-')[0]+ '&enline_time[]=' + online[i].split('-')[1]
+        print(redata)
+        req.data = redata
+        # req.data = "aid={0}&sid={1}&bid={2}&sname={3}&shop_short=&store_id=&phone={4}&mobile=&city={5}" \
+        #            "&address={6}&online_time%5B%5D={7}&enline_time%5B%5D={8}&membertype=&btakeout=0&gwonline=0" \
+        #            "&membertype_option=&membertype_other=&shop_order_preminutes=0&nonoid=&bank_card_num=" \
+        #            "&bank=&third_code=&baidu_id=&bdwu_id=&meituan_id=&eleme_id=&wsh_id=&" \
+        #            "wsh_shop_id={9}&wsh_shop_key={10}&jddj_id=&xks_id=&dada_id=&" \
+        #            "delivery_charge={11}&least_sendcharge=0.00&delivery_markup={12}&send_advance=0&box_price=0.00&coordinate=" \
+        #            "&glng={13}&glat={14}&send_time=0&free_delivery={15}&large_order=0&remind_time=0&introduction=" \
+        #            "&announcement=&remarks=&meituan_sfid=&bingex_id=&csid=&jiaoma_id=&isinvoice={16}&techtrans_id=" \
+        #            "&coordinates%5B0%5D%5Btype%5D=CIRCLE&coordinates%5B0%5D%5BpeiStartTime%5D=&" \
+        #            "coordinates%5B0%5D%5BpeiEndTime%5D=&coordinates%5B0%5D%5Bdelivery_charge%5D=7" \
+        #            "&coordinates%5B0%5D%5Bleast_sendcharge%5D=0&coordinates%5B0%5D%5BdelReason%5D=" \
+        #            "&coordinates%5B0%5D%5Bcoordinate%5D=&coordinates%5B0%5D%5Bradius%5D=3000" \
+        #            "&third_pos=0&pos_ip=&warning_threshold=&dada_merchant_id=&elm_isv_shop_id=&psid".format(
+        #     said,dsid['sid'],sbid,dsid['sname'],dsid['phone'],dsid['city'],dsid['address'],dsid['']
+        # )
+        # print(req.data)
+        setres = req.post()
+        print(setres)
+    return "修改成功"
 
 def getSidInfo(bid,aid,sid):
     req.url = wp.baseurl + Url.getShopListAll + "&mcode=" + wp.c + "&bid=" + sbid + "&aid=" + said + "&sid=" + sid

@@ -4,6 +4,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylem.css') }}">
     <link rel="stylesheet" type="text/css" media="screen"  href="{{ url_for('static', filename='css/multi-select.css') }}">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <meta charset="UTF-8">
     <title>配置eco</title>
 </head>
@@ -12,7 +14,7 @@
     <div>
         <div class="ecoshop">
             <input type="hidden" id="sel_shop" name="sel_Shop" value="">
-            <ul>
+            <ul class="checkshop">
                 {% for i in shoplist %}
                 <li><input id="check_shop" type="checkbox" name="shopcontent" value="{{i}}"><a>{{i.sid}}</a> —— <a>{{i.sname}}</a></li>
                 {% endfor %}
@@ -40,7 +42,10 @@
                 <label class="control-label"><a>配送费加价/元：</a></label>
                 <input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" name="delivery_markup" value="0">
             </div>
+
+            <button class="submitbtn" type="submit">提交</button>
         </div>
+
     </div>
 </form>
 </body>

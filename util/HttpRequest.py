@@ -8,8 +8,10 @@ class Request(object):
     headers = None
 
     def post(self):
+        print(self.url)
         self.getHeaders()
         try:
+            print(self.data)
             r = requests.post(self.url, data=self.data, headers=self.headers, files=self.files)
             return self.response(r)
         except BaseException as e:
