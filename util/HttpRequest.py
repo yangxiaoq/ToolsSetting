@@ -38,6 +38,10 @@ class Request(object):
             try:
                 response_json = r.json()
             except BaseException as e:
-                response_json = "success"
+                response_json = str(r.text)
+                if response_json.find("用户登录") > -1:
+                    response_json = "fail"
+                else:
+                    response_json = "success"
         return response_json  # 返回响应码，响应内容
 

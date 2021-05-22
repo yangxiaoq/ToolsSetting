@@ -9,13 +9,38 @@
 </head>
 <body>
 <form  method="POST" action="/set_eco_shop">
-    <div class="ecoshop">
-        <input type="hidden" id="sel_shop" name="sel_Shop" value="">
-        <ul>
-            {% for i in shoplist %}
-            <li><input id="check_shop" type="checkbox" name="shopcontent" value="{{i}}"><a>{{i.sid}}</a> —— <a>{{i.sname}}</a></li>
-            {% endfor %}
-         </ul>
+    <div>
+        <div class="ecoshop">
+            <input type="hidden" id="sel_shop" name="sel_Shop" value="">
+            <ul>
+                {% for i in shoplist %}
+                <li><input id="check_shop" type="checkbox" name="shopcontent" value="{{i}}"><a>{{i.sid}}</a> —— <a>{{i.sname}}</a></li>
+                {% endfor %}
+             </ul>
+        </div>
+        <div class="form-group">
+            <div class="isinvoice">
+                <label class="control-label"><a>是否支持发票：</a></label>
+                <div class="col-sm-8">
+                    <div class="radio radio-info radio-inline">
+                        <input checked="" class="invoice" type="radio" id="invoiceRadio5" name="invoice" value="1">
+                        <label for="invoiceRadio5"> 是 </label>
+                    </div>
+                    <div class="radio radio-inline">
+                        <input class="invoice" type="radio" id="invoiceRadio6" name="invoice" value="0">
+                        <label for="invoiceRadio6"> 否 </label>
+                    </div>
+                </div>
+            </div>
+            <div class="free_delivery">
+                <label class="control-label"><a>免外送费条件/元：</a></label>
+                <input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" name="free_delivery" value="0">
+            </div>
+            <div class="delivery_markup">
+                <label class="control-label"><a>配送费加价/元：</a></label>
+                <input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" name="delivery_markup" value="0">
+            </div>
+        </div>
     </div>
 </form>
 </body>

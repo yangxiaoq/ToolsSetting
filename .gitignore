@@ -1,2 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 .gitignore
+WebPage/__init__.pyc
+WebPage/__pycache__/
+WebPage/request/__pycache__/
+config/__pycache__/
+util/__pycache__/

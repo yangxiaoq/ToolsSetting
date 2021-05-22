@@ -20,3 +20,15 @@ def readcookie(type = 2):
                 cookievaluet = '%s=%s;%s'%(k,v,cookievaluet)
                 cookievalue = cookievaluet[0:-1]
     return cookievalue
+
+cfile = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'config','c.txt')
+
+def writec(c):
+    with open(cfile ,"w",encoding="utf-8") as f:
+        f.write('%s'%c)
+        f.close()
+
+def readc():
+    with open(cfile, "r", encoding="utf-8") as f:
+        content = f.read()
+    return content

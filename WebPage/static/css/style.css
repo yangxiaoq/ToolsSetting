@@ -81,7 +81,7 @@ a:hover {
 }
 
 ul{
-    width: 50%;
+    width: 100%;
     height: 100%;
     height:auto;
     background-color: #0f0f0f;
@@ -94,5 +94,62 @@ li {
     float: left;
     list-style:none;
     width:100%;
+}
+
+.ecoshop{
+    float: left;
+    display: inline-block;
+    width: 30%;
+}
+
+.form-group {
+    float: left;
+    display: inline-block;
+    width:70%;
+}
+
+.col-sm-8{
+    min-height:1px;
+    padding-right:15px;
+    padding-left:15px;
+    width:66.66666667%
+}
+
+.control-label{
+    float: left;margin-right: 2em;
+    display: inline-block;
+    font-weight: 700;
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
+    width:20%;
+}
+
+.radio, .radio-inline {
+    padding-top: 7px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.radio-inline input[type=radio],.free_delivery input,.delivery_markup input {
+    margin-top: 3px;
+}
+
+.radio-inline {
+    position: relative;
+    display: inline-block;
+    padding-left: 10px;
+    margin-bottom: 0;
+    font-weight: 400;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+label a{
+    font-size: 1.2em;
+}
+
+.free_delivery, .delivery_markup ,.isinvoice{
+    margin-top: 10px;
 }
 

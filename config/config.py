@@ -6,6 +6,14 @@ beta = {
 }
 
 pre = {
+    "url":"http://huifu-waimai-beta.acewill.cn",
+    "c":"2020072755",
+    "username":"13716326708",
+    "passwd":"16663446"
+}
+
+pro = {
+    "url":"http://huifu-waimai-beta.acewill.cn",
     "c":"2020072755",
     "username":"13716326708",
     "passwd":"16663446"
