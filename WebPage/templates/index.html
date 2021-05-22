@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylem.css') }}">
     <link rel="stylesheet" type="text/css" media="screen"  href="{{ url_for('static', filename='css/multi-select.css') }}">
     <meta charset="UTF-8">
     <title>配置eco</title>
 </head>
 <body>
-
+<form  method="POST" action="/set_eco_shop">
+    <div class="ecoshop">
+        <input type="hidden" id="sel_shop" name="sel_Shop" value="">
+        <ul>
+            {% for i in shoplist %}
+            <li><input id="check_shop" type="checkbox" name="shopcontent" value="{{i}}"><a>{{i.sid}}</a> —— <a>{{i.sname}}</a></li>
+            {% endfor %}
+         </ul>
+    </div>
+</form>
 </body>
+<script src="{{ url_for('static', filename='js/ecoshop.js')}} "></script>
 </html>

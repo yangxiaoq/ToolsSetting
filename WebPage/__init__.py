@@ -22,4 +22,5 @@ def start():
    passwd = bc['passwd']
    c = bc['c']
    dataj = {"name": name, "pwd": passwd, "mcode": c}
-   return StruData.betastart()
+   shopdata = StruData.betastart()
+   return "登录成功" if (shopdata == "success") else render_template("index.html", shoplist=shopdata['data'])

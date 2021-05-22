@@ -1,29 +1,14 @@
 from WebPage import app
-from flask import render_template
-from util import Url
-from util.HttpRequest import Request
-from config import config
-import WebPage as wp
+from flask import render_template,request
+from WebPage.request.ObtainData import *
 
-req = Request()
 
 @app.route('/beta')
-def betastart():
-    req.url = wp.baseurl + Url.check
-    req.data = wp.dataj
-    loginresp = req.post()
-    if loginresp == "success":
-        refresh()
-    return "登录成功" if (loginresp == "success") else render_template("index.html")
+def beta():
+    shopdata = betastart()
+    return "登录成功" if (shopdata == "success") else render_template("index.html", shoplist=shopdata['data'])
 
-def refresh():
-    req.url = wp.baseurl + "/c/" + wp.c
-    req.data = None
-    refeshresp = req.get()
-    if refeshresp == "success":
-        getBrandList()
-
-def getBrandList():
-    req.url = wp.baseurl + Url.getBrandList +"?mcode=" + wp.c
-    req.data = wp.dataj
-    branresp = req.get()
+@app.route('/set_eco_shop', methods=['POST'])
+def set_eco_shop():
+    sel_shop = str(request.form["sel_Shop"])
+    SetEcoShop(sel_shop)

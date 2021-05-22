@@ -1,2 +1,5 @@
 check = "/c/home/check"
 getBrandList = "/public/fun/getBrandList"
+getFRegionList = "/public/fun/getFRegionList"
+getShopListAll = "/waimaiShop/shop/getShopListAll?auto_receive_order=-1&business_status=-1&docking_status=-1&iscompound=-1&limit=10&page=1&searchIds=1&searchName=&source=-1&status=1,0"
+editship = "/waimaiShop/shop/editShop"
