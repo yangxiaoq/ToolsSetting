@@ -1,5 +1,8 @@
 from util import Util,Url
+import grequests
 import requests
+
+
 class Request(object):
 
     url = ""
@@ -46,4 +49,25 @@ class Request(object):
                 else:
                     response_json = "success"
         return response_json  # 返回响应码，响应内容
+
+
+    def grequest(self,listurl,listreq):
+        self.getHeaders()
+        req_list = []
+        for a in range(len(listreq)):
+            req_list.append(grequests.request("POST",listurl[a],data = listreq[a],headers=self.headers))
+        res_list = grequests.map(req_list)  # 并行发送，等最后一个运行完后返回
+        for b in res_list:
+            if b.status_code == 200:
+                try:
+                    response_json = b.json()
+                    print(response_json)
+                except BaseException as e:
+                    response_json = '{"success":"2","msg":"请求异常或部分成功"}'
+            else:
+                return '{"success":"2","msg":请求异常或部分成功"}'
+        return '{"success":"1","msg":"请求成功"}'
+
+
+
 

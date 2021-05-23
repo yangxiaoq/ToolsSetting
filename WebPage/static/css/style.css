@@ -80,14 +80,14 @@ a:hover {
     color: #377BA8;
 }
 
-ul{
+.ecoshop ul{
     width: 100%;
     height: 100%;
     height:auto;
     background-color: #0f0f0f;
 }
 
-li {
+.ecoshop li {
     overflow: hidden;
     font-size: 16px;
     height: 50px;
@@ -102,7 +102,7 @@ li {
     width: 30%;
 }
 
-.form-group {
+.form-group ,.dev_time{
     float: left;
     display: inline-block;
     width:70%;
@@ -131,7 +131,7 @@ li {
     margin-bottom: 0;
 }
 
-.radio-inline input[type=radio],.free_delivery input,.delivery_markup input {
+.radio-inline input[type=radio],.content input,.lineofbuss input,.dev_time {
     margin-top: 3px;
 }
 
@@ -149,15 +149,18 @@ label a,.submitbtn{
     font-size: 1.2em;
 }
 
-.free_delivery, .delivery_markup ,.isinvoice ,.submitbtn{
+.content ,.lineofbuss,.dev_time{
     margin-top: 10px;
 }
 
 
 .submitbtn{
-    float: left;
+    margin-left: 20%;
     border: 1px solid #377BA8;
-    margin-top: 20px;
+    margin-top: 40px;
     width: 60px;
     height: 30px;
 }
+
+
+

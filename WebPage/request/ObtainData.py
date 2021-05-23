@@ -55,46 +55,80 @@ def getShopListAll(bid,aid):
     shopdata = req.get()
     return shopdata['data']
 
+def getShopParam(sid):
+    req.url = wp.baseurl + Url.loadshop_param.format(wp.c,str(sid))
+    shoppar = req.get()
+    global savesidconf
+    savesidconf = shoppar['data']
+    print(savesidconf)
+    return shoppar
+
 def SetEcoShop(*key):
-    req.url = wp.baseurl + Url.editship + "?mcode=" + wp.c
+    urllist = []
+    datalist = []
+    jburl = wp.baseurl + Url.editship + "?mcode=" + wp.c
     sid = key[0]
     if len(sid) == 0:
-        return "请选择门店"
+        return '{"success":"2","msg":"请选择门店"}'
     invoice = key[1]
     free_delivery = key[2]
     delivery_markup = key[3]
+    is_online = key[4]
+    sel_week = key[5]
+    devtime = key[6]
+    timerule = key[7]
+    sel_buss = key[8]
+    if sel_buss == "":
+        return '{"success":"2","msg":"请选择经营方式"}'
     sids = sid.split('|')
+    savesid = ""
     for i in range(len(sids)):
         dsid = eval(sids[i])
+        savesid += dsid['sid']
+        if len(sids) > 1 and i != len(sids)-1:
+            savesid += ","
         dsid['delivery_markup'] = delivery_markup
         dsid['free_delivery'] = free_delivery
         dsid['isinvoice'] = invoice
         online = str(dsid['online_time']).split(' ')
-        coordinates = str(dsid['coordinates'])
+        if type(dsid['coordinates']) not in [tuple,list]:
+            coordinates = eval(dsid['coordinates'])
+        else:
+            coordinates = dsid['coordinates']
+        dsid.pop('online_time')
+        dsid.pop('coordinates')
         redata = urlencode(dsid)
         for i in range(len(online)):
-            redata = redata + '&online_time[]=' + online[i].split('-')[0]+ '&enline_time[]=' + online[i].split('-')[1]
-        print(redata)
-        req.data = redata
-        # req.data = "aid={0}&sid={1}&bid={2}&sname={3}&shop_short=&store_id=&phone={4}&mobile=&city={5}" \
-        #            "&address={6}&online_time%5B%5D={7}&enline_time%5B%5D={8}&membertype=&btakeout=0&gwonline=0" \
-        #            "&membertype_option=&membertype_other=&shop_order_preminutes=0&nonoid=&bank_card_num=" \
-        #            "&bank=&third_code=&baidu_id=&bdwu_id=&meituan_id=&eleme_id=&wsh_id=&" \
-        #            "wsh_shop_id={9}&wsh_shop_key={10}&jddj_id=&xks_id=&dada_id=&" \
-        #            "delivery_charge={11}&least_sendcharge=0.00&delivery_markup={12}&send_advance=0&box_price=0.00&coordinate=" \
-        #            "&glng={13}&glat={14}&send_time=0&free_delivery={15}&large_order=0&remind_time=0&introduction=" \
-        #            "&announcement=&remarks=&meituan_sfid=&bingex_id=&csid=&jiaoma_id=&isinvoice={16}&techtrans_id=" \
-        #            "&coordinates%5B0%5D%5Btype%5D=CIRCLE&coordinates%5B0%5D%5BpeiStartTime%5D=&" \
-        #            "coordinates%5B0%5D%5BpeiEndTime%5D=&coordinates%5B0%5D%5Bdelivery_charge%5D=7" \
-        #            "&coordinates%5B0%5D%5Bleast_sendcharge%5D=0&coordinates%5B0%5D%5BdelReason%5D=" \
-        #            "&coordinates%5B0%5D%5Bcoordinate%5D=&coordinates%5B0%5D%5Bradius%5D=3000" \
-        #            "&third_pos=0&pos_ip=&warning_threshold=&dada_merchant_id=&elm_isv_shop_id=&psid".format(
-        #     said,dsid['sid'],sbid,dsid['sname'],dsid['phone'],dsid['city'],dsid['address'],dsid['']
-        # )
-        # print(req.data)
-        setres = req.post()
-        print(setres)
-    return "修改成功"
+            redata += '&online_time[]=' + online[i].split('-')[0]+ '&enline_time[]=' + online[i].split('-')[1]
+        for j in range(len(coordinates)):
+            coorob = coordinates[j]
+            for k,v in coorob.items():
+                redata += "&coordinates["+str(j)+"]["+k+"]=" + str(v)
+        urllist.append(jburl)
+        datalist.append(redata)
+
+    # 修改门店配置
+    saveshopurl = wp.baseurl + Url.saveConfigStore.format(savesid,wp.c)
+    savesidconf['auto_receive_order'] = is_online
+    savesidconf['business_type'] = sel_buss
+    savesidconf['dinrange'] = sel_week
+    savesidconf['intervaltime'] = devtime
+    savesidconf['dinrule'] = timerule
+    #比对加入
+    savesidconf["order_invoice"] = savesidconf["orderInvoice"]
+    savesidconf.pop("is_writePos")
+    savesidconf.pop("orderInvoice")
+    savesidconf.pop("is_invoice")
+    savesidconf.pop("is_eco_delivery")
+    savesidconf.pop("delivery")
+    savesidconf.pop("bd_source_id")
+    urllist.append(saveshopurl)
+    datalist.append(savesidconf)
+
+    setres = req.grequest(urllist,datalist)
+    return setres
+
+savesidconf = {}
 
 def getSidInfo(bid,aid,sid):
     req.url = wp.baseurl + Url.getShopListAll + "&mcode=" + wp.c + "&bid=" + sbid + "&aid=" + said + "&sid=" + sid
