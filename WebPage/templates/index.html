@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" media="screen"  href="{{ url_for('static', filename='css/multi-select.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylem.css') }}">
-    <link rel="stylesheet" type="text/css" media="screen"  href="{{ url_for('static', filename='css/multi-select.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min14ed.css') }}">
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
@@ -66,6 +67,36 @@ set sel_dintime = {
                         <label for="invoiceRadio6"> 否 </label>
                     </div>
                 </div>
+            </div>
+<!--            <div class="timeCenter">-->
+<!--                <label class="control-label"><a>上线时段：</a></label>-->
+<!--                <div class="timecontent">-->
+<!--                    <ul>-->
+<!--                        {% for i in onlinetimelist %}-->
+<!--                        <div class="timediv cf" style="float: left;margin-left: 15px">-->
+<!--                            <div style="float: left">-->
+<!--                                <div class="input-group clockpicker" data-autoclose="true">-->
+<!--                                    <input readonly="readonly" style="background-color: white" type="text" class="form-control start timesel" value="00:00">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div style="float: left;padding: 7px 9px 0 9px;"> 至 </div>-->
+<!--                            <div style="float: left">-->
+<!--                                <div class="input-group clockpicker" data-autoclose="true">-->
+<!--                                    <input readonly="readonly" style="background-color: white" type="text" class="form-control end timesel" value="00:00">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        {% endfor %}-->
+<!--                    </ul>-->
+
+<!--                    <a onclick="plus()" style="margin-left: 3px" class="btn btn-white btn-bitbucket">-->
+<!--                        <i class="fa fa-plus"></i>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="content">
+                <label class="control-label"><a>上线时段：(以逗号分隔)</a></label>
+                <input type="text" name="online_time" id="online_time" value="0">
             </div>
             <div class="content">
                 <label class="control-label"><a>免外送费条件/元：</a></label>

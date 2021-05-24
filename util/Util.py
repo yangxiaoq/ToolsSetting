@@ -1,4 +1,4 @@
-import os
+import os,re
 
 cookiefile = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'config','cookie.txt')
 
@@ -44,3 +44,19 @@ def differencelist():
     list4 = list(set(list1).difference(set(list2)))
     print('%s' % list4)
 
+
+def matchtime(time,type):
+    if re.match("\d\d:\d\d",time):
+        return re.search("\d\d:\d\d",time).group(),False
+    else:
+        if type == 1:
+            return "00:00",True
+        else:
+            return "23:59",True
+
+def isTimeNormal(stlist,etlist):
+    size = len(stlist)
+    for i in range(size-1):
+        if int(str(stlist[i+1]).replace(":","")) <  int(str(etlist[i]).replace(":","")):
+            return False
+    return True

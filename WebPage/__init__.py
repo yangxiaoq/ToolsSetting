@@ -6,7 +6,7 @@ from util.Util import *
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'random'
-app.debug = False
+app.debug = True
 from WebPage.request import StruData
 
 name = ""

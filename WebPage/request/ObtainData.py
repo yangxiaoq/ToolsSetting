@@ -1,7 +1,7 @@
 from util.HttpRequest import Request
 from config import config
 import WebPage as wp
-from util import Url
+from util import Url,Util
 from urllib.parse import urlencode
 
 req = Request()
@@ -78,6 +78,7 @@ def SetEcoShop(*key):
     devtime = key[6]
     timerule = key[7]
     sel_buss = key[8]
+    online_time = key[9]
     if sel_buss == "":
         return '{"success":"2","msg":"请选择经营方式"}'
     sids = sid.split('|')
@@ -90,7 +91,10 @@ def SetEcoShop(*key):
         dsid['delivery_markup'] = delivery_markup
         dsid['free_delivery'] = free_delivery
         dsid['isinvoice'] = invoice
-        online = str(dsid['online_time']).split(' ')
+        online_time = str(online_time).strip()
+        if online_time == "" or online_time == "0" or online_time is None:
+            online_time = "00:00-23:59"
+        online = online_time.split(',')
         if type(dsid['coordinates']) not in [tuple,list]:
             coordinates = eval(dsid['coordinates'])
         else:
@@ -98,8 +102,30 @@ def SetEcoShop(*key):
         dsid.pop('online_time')
         dsid.pop('coordinates')
         redata = urlencode(dsid)
+        starttimelist = []
+        endtimelist = []
+        istimenormal = True
         for i in range(len(online)):
-            redata += '&online_time[]=' + online[i].split('-')[0]+ '&enline_time[]=' + online[i].split('-')[1]
+            try:
+                starttime = online[i].strip().split('-')[0]
+                endtime = online[i].strip().split('-')[1]
+                starttime,isbreak = Util.matchtime(starttime,1)
+                endtime,isbreak = Util.matchtime(endtime,2)
+            except BaseException as e:
+                starttime = "00:00"
+                endtime = "23:59"
+                isbreak = True
+            if isbreak:
+                break
+            else:
+                starttimelist.append(starttime)
+                endtimelist.append(endtime)
+        istimenormal = Util.isTimeNormal(starttimelist,endtimelist)
+        if istimenormal:
+            for itime in range(len(starttime)):
+                redata += '&online_time[]=' + starttimelist[itime] + '&enline_time[]=' + endtimelist[itime]
+        else:
+            redata += '&online_time[]=' + "00:00" + '&enline_time[]=' + "23:59"
         for j in range(len(coordinates)):
             coorob = coordinates[j]
             for k,v in coorob.items():

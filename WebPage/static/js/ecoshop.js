@@ -3,6 +3,7 @@ $(function(){
     var invoice = "";
     var free_delivery = "";
     var delivery_markup = "";
+    var onlinetime = "";
     var sel_value = "";
     var sel_length = "{{sel_week|length}}";
 
@@ -134,6 +135,8 @@ $(function(){
             invoice = $(this).val().match(/isinvoice': '(\S*)',/)[1];
             free_delivery = $(this).val().match(/free_delivery': '(\S*)',/)[1];
             delivery_markup = $(this).val().match(/delivery_markup': '(\S*)',/)[1];
+            onlinetime = $(this).val().match(/online_time': '(.+?)', '/)[1];
+            onlinetime = onlinetime.replace(/\s+/g,",");
             if(invoice == "1"){
                 $("#invoiceRadio6").removeAttr("checked");
                 $("#invoiceRadio5").attr("checked","checked");
@@ -143,6 +146,7 @@ $(function(){
             }
             $( "#free_delivery" ).val(free_delivery);
             $( "#delivery_markup" ).val(delivery_markup);
+            $( "#online_time" ).val(onlinetime);
             getshopParam();
         }
 

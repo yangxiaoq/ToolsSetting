@@ -12,12 +12,13 @@ def set_eco_shop():
         invoice = str(request.form["invoice"])
         free_delivery = str(request.form["free_delivery"])
         delivery_markup = str(request.form["delivery_markup"])
+        online_time = request.form["online_time"]
         is_online = request.form["is_online"]
         sel_week = request.form["sel_week"]
         devtime = request.form["devtime"]
         timerule = request.form["timerule"]
         sel_buss = request.form["sel_buss"]
-        resultinfo = SetEcoShop(sel_shop,invoice,free_delivery,delivery_markup,is_online,sel_week,devtime,timerule,sel_buss)
+        resultinfo = SetEcoShop(sel_shop,invoice,free_delivery,delivery_markup,is_online,sel_week,devtime,timerule,sel_buss,online_time)
         print(resultinfo)
         return resultinfo
     return WebPage.init()
