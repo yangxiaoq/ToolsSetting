@@ -2,6 +2,7 @@ from WebPage import app
 import WebPage
 from flask import render_template,request
 from WebPage.request.ObtainData import *
+import json
 
 
 @app.route('/set_eco_shop', methods=['POST','GET'])
@@ -24,5 +25,5 @@ def set_eco_shop():
 @app.route('/getshopparam', methods=['GET',"POST"])
 def getshopparam():
     sid = request.form["sid"]
-    return getShopParam(sid)
+    return json.dumps(getShopParam(sid))
 
