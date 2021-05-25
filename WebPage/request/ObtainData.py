@@ -92,7 +92,7 @@ def SetEcoShop(*key):
         dsid['free_delivery'] = free_delivery
         dsid['isinvoice'] = invoice
         online_time = str(online_time).strip()
-        if online_time == "" or online_time == "0" or online_time is None:
+        if bool(online_time) == False:
             online_time = "00:00-23:59"
         online = online_time.split(',')
         if type(dsid['coordinates']) not in [tuple,list]:
@@ -115,14 +115,15 @@ def SetEcoShop(*key):
                 starttime = "00:00"
                 endtime = "23:59"
                 isbreak = True
-            if isbreak:
-                break
-            else:
+            finally:
                 starttimelist.append(starttime)
                 endtimelist.append(endtime)
+            if isbreak:
+                break
+
         istimenormal = Util.isTimeNormal(starttimelist,endtimelist)
         if istimenormal:
-            for itime in range(len(starttime)):
+            for itime in range(len(starttimelist)):
                 redata += '&online_time[]=' + starttimelist[itime] + '&enline_time[]=' + endtimelist[itime]
         else:
             redata += '&online_time[]=' + "00:00" + '&enline_time[]=' + "23:59"
